@@ -1,0 +1,15 @@
+2020/08/14 00:14:42.262772 E:/Go_code/src/log_deman/logger_deman.go:28:  这是一条普通日志
+[***]2020/08/14 00:14:42.278786 E:/Go_code/src/log_deman/logger_deman.go:32:  这是一条普通日志1111111
+[***]2020/08/14 00:14:42.279767 E:/Go_code/src/log_deman/logger_deman.go:14: test1  dfsaf
+[***]2020/08/14 00:14:42.279767 E:/Go_code/src/log_deman/logger_deman.go:17: log  string  a a 
+[***]2020/08/14 00:14:42.279767 E:/Go_code/src/log_deman/logger_deman.go:19: this is a fatal log 
+2020/08/16 23:28:59.324252 E:/Go_code/src/log_deman/logger_deman.go:31:  这是一条普通日志
+[***]2020/08/16 23:28:59.344249 E:/Go_code/src/log_deman/logger_deman.go:35:  这是一条普通日志1111111
+2020/08/16 23:35:38.967875 E:/Go_code/src/log_deman/logger_deman.go:31:  这是一条普通日志
+[***]2020/08/16 23:35:38.984871 E:/Go_code/src/log_deman/logger_deman.go:35:  这是一条普通日志1111111
+2020/08/16 23:36:08.332218 E:/Go_code/src/log_deman/logger_deman.go:31:  这是一条普通日志
+[***]2020/08/16 23:36:08.348215 E:/Go_code/src/log_deman/logger_deman.go:35:  这是一条普通日志1111111
+2020/08/16 23:44:02.590003 E:/Go_code/src/log_deman/logger_deman.go:31:  这是一条普通日志
+[***]2020/08/16 23:44:02.607002 E:/Go_code/src/log_deman/logger_deman.go:35:  这是一条普通日志1111111
+2020/08/16 23:46:43.258524 E:/Go_code/src/log_deman/logger_deman.go:31:  这是一条普通日志
+[***]2020/08/16 23:46:43.274523 E:/Go_code/src/log_deman/logger_deman.go:35:  这是一条普通日志1111111

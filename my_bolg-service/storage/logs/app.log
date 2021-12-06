@@ -1,0 +1,3 @@
+[ChenJingBo]2020/12/20 21:07:02 {"callers":["/Users/chen/Documents/Code/Go_code/src/bolg-service_/main.go: 33 main.init.0"],"level":"info","message":"blog service","time":1608469622574882000}
+[ChenJingBo]2020/12/20 23:42:30 {"callers":["/Users/chen/Documents/Code/Go_code/src/bolg-service_/main.go: 33 main.init.0"],"level":"info","message":"blog service","time":1608478950520263000}
+[ChenJingBo]2020/12/28 01:31:21 {"callers":["/Users/chen/Documents/Code/Go_code/src/bolg-service_/main.go: 33 main.init.0"],"level":"info","message":"blog service","time":1609090281790866000}

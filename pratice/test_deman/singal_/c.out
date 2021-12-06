@@ -1,0 +1,4 @@
+mode: set
+test_deman/singal_/split.go:10.44,14.12 3 1
+test_deman/singal_/split.go:19.2,20.15 2 1
+test_deman/singal_/split.go:14.12,18.3 3 1
