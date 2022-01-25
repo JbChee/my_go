@@ -353,6 +353,28 @@ func GetVipBuyRecTable(ts time.Time) string {
 	//return tableNameStr
 }
 
+//获取某一天的0点时间
+func GetZeroTime(t time.Time) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+}
+
+//获取本周周一的日期
+func GetSundayOfWeek(t time.Time) (dayStr string) {
+	dayObj := GetZeroTime(t)
+	if t.Weekday() == time.Monday {
+		//修改hour、min、sec = 0后格式化
+		dayStr = dayObj.Format("2006_01_02")
+	} else {
+		offset := int(time.Monday - t.Weekday())
+		if offset > 0 {
+			offset = -6
+		}
+		dayStr = dayObj.AddDate(0, 0, offset).Format("2006_01_02")
+	}
+	fmt.Println(dayStr)
+	return
+}
+
 func main() {
 	//listfunc()
 	//slicefunc()
@@ -394,8 +416,8 @@ func main() {
 
 	//makeMap()
 
-	go testTicker()
-	time.Sleep(time.Second * 10)
+	//go testTicker()
+	//time.Sleep(time.Second * 10)
 
 	//var a interface{} = "gggg"
 	//test_type(a)
@@ -427,5 +449,23 @@ func main() {
 	//test_runtime_Gosched()
 
 	//GetVipBuyRecTable(time.Now())
+
+	//测试时间
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24 * -1 ))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24 ))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*2))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*3))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*4))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*5))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*6))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*7))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*8))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*9))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*10))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*11))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*12))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*13))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*14))
+	GetSundayOfWeek(time.Now().Add(time.Hour * 24*15))
 }
 
