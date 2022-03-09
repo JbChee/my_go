@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"flag"
+	"fmt"
+	"github.com/coreos/etcd/proxy/grpcproxy"
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"golang.org/x/net/http2"
@@ -16,9 +18,11 @@ import (
 	"net"
 	"net/http"
 	"strings"
+	"github.com/coreos/etcd/clientv3"
 	"tag-server/internal/middleware"
 	pb "tag-server/proto"
 	"tag-server/server"
+	"time"
 )
 
 //type server struct {
@@ -118,6 +122,18 @@ func RunServer(port string) error {
 
 	httpMux.Handle("/", gatewayMux)
 
+	//增加服务发现
+	etcdClient, err := clientv3.New(clientv3.Config{
+		Endpoints:[]string{"http://localhost:2379"},DialTimeout:time.Second * 60,
+	})
+	if err != nil {
+		return err
+	}
+	defer etcdClient.Close()
+
+	target := fmt.Sprintf("/etcdv3://go-programming-tour/grpc/%s", "tar-service")
+	grpcproxy.Register(etcdClient, target, ":" + port, 60)
+
 	return http.ListenAndServe(":"+port, grpcHandlerFunc(grpcS, httpMux))
 }
 
@@ -136,6 +152,7 @@ func runGrpcServer() *grpc.Server {
 			middleware.AccessLog,
 			middleware.ErrorLog,
 			middleware.Recovery,
+			HelloInterceptor,
 		)),
 	}
 	s := grpc.NewServer(opts...)
@@ -219,4 +236,12 @@ func RunGrpcServer(port string) *grpc.Server {
 
 func RunTcpServer(port string) (net.Listener, error) {
 	return net.Listen("tcp", ":"+port)
+}
+
+//拦截器
+func HelloInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
+	log.Println("你好")
+	resp, err := handler(ctx, req)
+	log.Println("再见")
+	return resp, err
 }
