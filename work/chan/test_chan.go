@@ -23,13 +23,14 @@ func test_err() {
 	close(ch)
 }
 
-func test2_proess(timeout time.Duration) bool{
+// goroutine 泄漏
+func test2_proess(timeout time.Duration) bool {
 	//ch := make(chan bool, 1) // 不会泄漏
-	ch := make(chan bool) // goroutine 泄漏
+	ch := make(chan bool)
 
 	go func() {
 		time.Sleep((timeout + time.Second))
-		ch <- true // 这里会阻塞，因为接受通道被关闭
+		ch <- true // 这里会阻塞，因为接受通道关闭⬇️
 		println("go exit")
 	}()
 
@@ -45,13 +46,13 @@ func test2_proess(timeout time.Duration) bool{
 
 }
 
-func test3_wait(timeout time.Duration) bool{
+func test3_wait(timeout time.Duration) bool {
 	//ch := make(chan bool, 1)
 	ch := make(chan bool)
 
 	go func() {
 		time.Sleep((timeout + time.Second))
-		ch <- true // 这里会阻塞，因为接受通道被关闭
+		ch <- true // 这里panic，因为通道被关闭
 		println("go exit")
 	}()
 
@@ -66,15 +67,14 @@ func test3_wait(timeout time.Duration) bool{
 	//	//}
 	defer println("test3_wait exit")
 	close(ch)
-	time.Sleep(6*time.Second)
-
-	return  <- ch
+	time.Sleep(6 * time.Second)
+	return <-ch
 
 }
 
 func test4_close(timeout time.Duration) {
 	//ch := make(chan bool, 1)
-	ch := make(chan int,5)
+	ch := make(chan int, 5)
 
 	go func() {
 		ch <- 1
@@ -97,21 +97,18 @@ func test4_close(timeout time.Duration) {
 	//	//}
 	defer println("test4_close exit")
 	time.Sleep(time.Second)
-	println(<-ch)// 即使关闭了ch，ch中还有数据，就可以继续消费数据
-	println(<-ch)//
-	println(<-ch)//
-	println(<-ch)//
-	println(<-ch)//
-	println(<-ch)//
-	println(<-ch)//零值
-	println(<-ch)//零值
-
+	println(<-ch) // 即使关闭了ch，ch中还有数据，就可以继续消费数据
+	println(<-ch) //
+	println(<-ch) //
+	println(<-ch) //
+	println(<-ch) //
+	println(<-ch) //
+	println(<-ch) //零值
+	println(<-ch) //零值
 
 	return
 
 }
-
-
 
 func main() {
 	//f, err := os.Create("trace.out")
@@ -126,8 +123,10 @@ func main() {
 	//}
 	//defer trace.Stop()
 	//test()
-	//_ = test2_proess(time.Second*2)
-	//_ = test3_wait(time.Second*1)
-	test4_close(time.Second*1)
+	//_ = test2_proess(time.Second * 2)
+	_ = test3_wait(time.Second * 1)
+	//test4_close(time.Second*1)
+	//go test_err()
 
+	time.Sleep(time.Second * 3)
 }

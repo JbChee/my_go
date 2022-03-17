@@ -6,7 +6,7 @@ func range_str(){
 	a := "0Abcdefg\x41\xfe"
 
 	for _, i := range a{
-		fmt.Printf("str = %#x" , i)
+		fmt.Printf("str = %#x\n" , i)
 
 		fmt.Printf("str = %#v" , i)
 		fmt.Println()

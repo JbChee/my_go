@@ -40,10 +40,14 @@ func main() {
 	//go recv()
 	ticker := time.NewTicker(time.Second * 5)
 
+	//time.After不能在for循环中使用，会大量创建，但是实际是收到不chan
+	endChan := time.After(time.Second * 10)
+
+
 	for {
 		fmt.Println("1s")
 		select {
-		case <-time.After(time.Second * 30):
+		case  <- endChan:
 			fmt.Println("30s end")
 
 		case <- ticker.C:

@@ -12,7 +12,7 @@ var err error
 
 
 func test_read(){
-	inputFile, inputError := os.Open("./read/test_read.txt")
+	inputFile, inputError := os.Open("./test_read.txt")
 	if inputError != nil {
 		fmt.Printf("An error occurred on opening the inputfile\n" +
 			"Does the file exist?\n" +

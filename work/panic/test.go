@@ -10,11 +10,11 @@ import (
 //最外层进程捕获recover也是不行的，只能在当前panic的协程，recover
 func RunPanic(UserName string){
 
-	//defer func() {
-	//	if e := recover(); e != nil{
-	//		fmt.Println("recover_panic")
-	//	}
-	//}()
+	defer func() {
+		if e := recover(); e != nil{
+			fmt.Println("RunPanic | recover_panic")
+		}
+	}()
 
 	if UserName == ""{
 		go panic("username = ''")
@@ -30,8 +30,8 @@ func main() {
 			fmt.Println("recover_panic")
 		}
 	}()
-	panic("")
-	//go RunPanic("")
+	//panic("")
+	go RunPanic("")
 
 	time.Sleep(10*time.Second)
 }

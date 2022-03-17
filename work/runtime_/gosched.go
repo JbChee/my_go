@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"time"
 )
 
 func main() {
@@ -10,13 +11,13 @@ func main() {
 		for i :=0 ; i < 5; i++{
 			fmt.Println("goroutine1")
 			if i ==2{
-				//runtime.Goexit()
+				runtime.Goexit()
 			}
 		}
 	}()
 	go func() {
 		for i :=0 ; i < 5; i++{
-			//time.Sleep(time.Second)
+			time.Sleep(time.Second)
 			fmt.Println("goroutine2")
 		}
 	}()

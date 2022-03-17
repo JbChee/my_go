@@ -16,7 +16,7 @@ func test(value interface{}) {
 	switch v := value.(type) {
 	case string:
 		fmt.Println(v)
-	case User:
+	case *User:
 		if resp, ok := value.(User); ok {
 			fmt.Printf("Name = %s", resp.Name)
 		}

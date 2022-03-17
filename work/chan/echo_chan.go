@@ -82,6 +82,6 @@ func echo_str_token(num int) {
 	select {}
 }
 func main() {
-	runabc(3,4)
-	//echo_str_token(6)
+	//runabc(3,4)
+	echo_str_token(6)
 }

@@ -12,13 +12,13 @@ type People struct {
 	Age  int
 }
 
-func (s People) String() string {
-	return fmt.Sprintf("[Name: %s], [Age: %d]", s.Name, s.Age)
-}
-
-//func (s *People) String() string {
+//func (s People) String() string {
 //	return fmt.Sprintf("[Name: %s], [Age: %d]", s.Name, s.Age)
 //}
+
+func (s *People) String() string {
+	return fmt.Sprintf("[Name: %s], [Age: %d]", s.Name, s.Age)
+}
 
 func main() {
 

@@ -8,4 +8,8 @@ func main() {
 	*str = "EFG"
 	fmt.Println(str)
 
+	var a string
+	a = "xxxx"
+	fmt.Println(a)
+
 }

@@ -13,7 +13,7 @@ type Container struct {
 }
 
 //传指针，不然每次调用都是新的container,每份container都持有各自都lock，所以并发都时候，锁没有生效
-func (c Container) inc(name string) {
+func (c *Container) inc(name string) {
 	c.Lock() // <-- Added locking of the mutex
 	defer c.Unlock()
 	//c.counters[name]++
