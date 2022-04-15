@@ -358,17 +358,20 @@ func GetZeroTime(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 }
 
-//获取本周周一的日期
+//获取本周周6的日期
 func GetSundayOfWeek(t time.Time) (dayStr string) {
 	dayObj := GetZeroTime(t)
-	if t.Weekday() == time.Monday {
+	fmt.Println(t.Weekday())
+	if t.Weekday() == time.Saturday {
 		//修改hour、min、sec = 0后格式化
 		dayStr = dayObj.Format("2006_01_02")
 	} else {
-		offset := int(time.Monday - t.Weekday())
-		if offset > 0 {
-			offset = -6
-		}
+		offset := int(time.Saturday - t.Weekday())
+		//if offset < 0 {
+		//	offset = -6
+		//}
+		fmt.Printf("offset = %v",offset)
+		fmt.Println()
 		dayStr = dayObj.AddDate(0, 0, offset).Format("2006_01_02")
 	}
 	fmt.Println(dayStr)
@@ -452,6 +455,7 @@ func main() {
 
 	//测试时间
 	GetSundayOfWeek(time.Now().Add(time.Hour * 24 * -1 ))
+	GetSundayOfWeek(time.Now())
 	GetSundayOfWeek(time.Now().Add(time.Hour * 24 ))
 	GetSundayOfWeek(time.Now().Add(time.Hour * 24*2))
 	GetSundayOfWeek(time.Now().Add(time.Hour * 24*3))
