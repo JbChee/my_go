@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/robfig/cron"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -102,19 +102,19 @@ func testtime() {
 	fmt.Printf("t = %v", t)
 }
 
-func testcron() {
-	fmt.Println("start cron")
-	c := cron.New()
-	//tim := "0 */1 * * *"
-	//榜单结算切换定时任务
-	//id, err := c.AddFunc("0 * * * * ?", func() {
-	id, err := c.AddFunc("0 30 * * ?", func() {
-		pln()
-	})
-	fmt.Println(id, err)
-
-	c.Start()
-}
+//func testcron() {
+//	fmt.Println("start cron")
+//	c := cron.New()
+//	//tim := "0 */1 * * *"
+//	//榜单结算切换定时任务
+//	//id, err := c.AddFunc("0 * * * * ?", func() {
+//	id, err := c.AddFunc("0 30 * * ?", func() {
+//		pln()
+//	})
+//	fmt.Println(id, err)
+//
+//	c.Start()
+//}
 func pln() {
 	fmt.Println("start cron")
 }
@@ -199,6 +199,75 @@ func testessql(uid int64) (int, error) {
 
 }
 
+func WahaTestEsSql(uid int64) (int, error) {
+	type bigCoinSource struct {
+		Uid  int64 `json:"uid"`
+		Gold int   `json:"gold"`
+	}
+
+	type BigDataCoinDetail struct {
+		Source bigCoinSource `json:"_source"`
+	}
+	type BigDataConsumeIncome struct {
+		Total int64               `json:"total"`
+		Hits  []BigDataCoinDetail `json:"hits"`
+	}
+	type BigDataConsumeDetail struct {
+		Timeout   bool                 `json:"-"`
+		DayIncome BigDataConsumeIncome `json:"hits"`
+	}
+
+
+	type EsResp struct {
+		Rows [][]int64 `json:"rows"`
+	}
+
+
+
+	ur := "http://es.sg.inkept.cn/_sql?format=json"
+	sql := fmt.Sprintf(`select count(1) from phxyuyin_online_heartbeat where uid = %v and ymd = '%s' and ts >= '%s' and ts< '%s'`, uid, "20220426", "2022-04-26 00:00:05", "2022-04-26 23:59:59")
+	fmt.Println("sql = ", sql)
+	bodyMap := map[string]interface{}{
+		"query":sql,
+		"fetch_size":100,
+	}
+	b, _ := json.Marshal(bodyMap)
+	body := bytes.NewReader(b)
+
+	fmt.Printf("urlString %s", ur)
+	request, err := http.NewRequest("POST", ur, body)
+	if err != nil {
+		fmt.Println("http.NewRequest error:%v", err)
+		return 0, err
+	}
+	request.Header.Set("Content-Type", "application/json")
+	client := &http.Client{Timeout: 5000 * time.Millisecond}
+	resp, err := client.Do(request)
+	if err != nil {
+		fmt.Println("client.Do error:%v", err)
+		return 0, err
+	}
+	bodyResp, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("readall failed, err=%s", err)
+		return 0, err
+	}
+	defer resp.Body.Close()
+	fmt.Printf("body:%v", string(bodyResp))
+
+	esResp := EsResp{}
+	err = json.Unmarshal(bodyResp, &esResp)
+	if err != nil {
+		fmt.Println("Unmarshal error:%v", err)
+		return 0, err
+	}
+	fmt.Println()
+	fmt.Println(esResp.Rows[0][0])
+
+	return 0, nil
+
+}
+
 func main() {
 	//listfunc()
 	//slicefunc()
@@ -211,5 +280,6 @@ func main() {
 	//res, err := testessql(100256)
 	//fmt.Println(res, err)
 
-	testtime2()
+	//testtime2()
+	_,_ = WahaTestEsSql(637975)
 }
