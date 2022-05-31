@@ -219,13 +219,13 @@ func WahaTestEsSql(uid int64) (int, error) {
 
 
 	type EsResp struct {
-		Rows [][]int64 `json:"rows"`
+		Rows [][]interface{} `json:"rows"`
 	}
 
 
 
 	ur := "http://es.sg.inkept.cn/_sql?format=json"
-	sql := fmt.Sprintf(`select count(1) from phxyuyin_online_heartbeat where uid = %v and ymd = '%s' and ts >= '%s' and ts< '%s'`, uid, "20220426", "2022-04-26 00:00:05", "2022-04-26 23:59:59")
+	sql := fmt.Sprintf(`select * from phxyuyin_user_order_record_new where uid = %v`, uid)
 	fmt.Println("sql = ", sql)
 	bodyMap := map[string]interface{}{
 		"query":sql,
@@ -281,5 +281,5 @@ func main() {
 	//fmt.Println(res, err)
 
 	//testtime2()
-	_,_ = WahaTestEsSql(637975)
+	_,_ = WahaTestEsSql(1011476)
 }

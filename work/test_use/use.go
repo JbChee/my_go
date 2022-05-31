@@ -283,12 +283,10 @@ func testTicker() {
 	time.Sleep(time.Second * 6)
 }
 
-func TimeStop(){
-	time.Sleep(time.Second*6)
+func TimeStop() {
+	time.Sleep(time.Second * 6)
 	fmt.Println("in Tick at")
 }
-
-
 
 func test_type(x interface{}) {
 
@@ -334,14 +332,13 @@ func test_runtime_Gosched() {
 	}()
 
 	for !done {
-		runtime.Gosched()//用于让出CPU时间片
+		runtime.Gosched()     //用于让出CPU时间片
 		println("not done !") // 并不内联执行
 	}
 
 	println("done !")
 
 }
-
 
 func GetVipBuyRecTable(ts time.Time) string {
 	TABLE_VIP_BUY_REC := "vins_vip_open_record"
@@ -370,12 +367,25 @@ func GetSundayOfWeek(t time.Time) (dayStr string) {
 		//if offset < 0 {
 		//	offset = -6
 		//}
-		fmt.Printf("offset = %v",offset)
+		fmt.Printf("offset = %v", offset)
 		fmt.Println()
 		dayStr = dayObj.AddDate(0, 0, offset).Format("2006_01_02")
 	}
 	fmt.Println(dayStr)
 	return
+}
+
+func TestSwitch(uid int64) {
+
+	uidStr := strconv.FormatInt(uid, 10)
+	if uidStr != ""{
+		if isOk, _ := regexp.MatchString(`[0,8]$`, uidStr); isOk {
+			fmt.Println(5)
+		}else{
+			fmt.Println(11)
+		}
+	}
+	fmt.Println(0)
 }
 
 func main() {
@@ -454,22 +464,24 @@ func main() {
 	//GetVipBuyRecTable(time.Now())
 
 	//测试时间
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24 * -1 ))
-	GetSundayOfWeek(time.Now())
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24 ))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*2))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*3))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*4))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*5))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*6))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*7))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*8))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*9))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*10))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*11))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*12))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*13))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*14))
-	GetSundayOfWeek(time.Now().Add(time.Hour * 24*15))
-}
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * -1))
+	//GetSundayOfWeek(time.Now())
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 2))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 3))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 4))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 5))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 6))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 7))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 8))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 9))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 10))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 11))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 12))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 13))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 14))
+	//GetSundayOfWeek(time.Now().Add(time.Hour * 24 * 15))
 
+	//TestSwitch
+	TestSwitch(128810)
+}
